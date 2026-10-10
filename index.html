@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Kuttachi 💖</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#160f24;
+  color:white;
+  text-align:center;
+}
+button,input{font:inherit}
+button{
+  border:0;border-radius:25px;padding:12px 20px;
+  background:linear-gradient(135deg,#ff77b7,#a77aff);
+  color:white;font-weight:bold;cursor:pointer;
+  margin:6px;
+}
+button:active{transform:scale(.97)}
+input[type=file]{
+  display:block;max-width:100%;margin:10px auto;
+  color:white;font-size:13px;
+}
+.panel{padding:20px;max-width:600px;margin:auto}
+.small{font-size:13px;color:#e4cce9;line-height:1.6}
+h1,h2{overflow-wrap:anywhere}
+h2{color:#ffc4e6}
+.hidden{display:none!important}
+
+/* Background and first screen */
+.hero{
+  min-height:100svh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#28152f;
+  background-position:center;
+  background-size:cover;
+  padding:20px;
+}
+.hero:before{
+  content:"";position:absolute;inset:0;
+  background:rgba(12,5,22,.32);
+}
+.hero-content{position:relative;z-index:1;width:100%}
+.dedication{
+  font-size:clamp(25px,6vw,38px);
+  text-shadow:0 0 12px #ff45a7;
+  animation:glow 2s infinite alternate;
+}
+.pin-box{
+  max-width:290px;margin:25px auto 0;
+  padding:17px;border-radius:18px;
+  background:rgba(25,12,35,.75);
+  border:1px solid #f9b6df;
+}
+.pin-box input{
+  width:100%;padding:12px;border-radius:10px;
+  border:1px solid #ffb9e3;text-align:center;
+  margin:8px 0;background:#fff;color:#333;
+}
+#pinError{color:#ffb9dc;font-size:13px}
+
+/* Small floating decorations */
+.decor{
+  position:fixed;z-index:5;pointer-events:none;
+  font-size:13px;opacity:.65;
+  animation:floatUp 7s linear forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0) rotate(0);opacity:.7}
+  to{transform:translateY(-105vh) rotate(35deg);opacity:0}
+}
+@keyframes glow{
+  from{text-shadow:0 0 5px #ff53b5}
+  to{text-shadow:0 0 16px #ff53b5,0 0 22px #cda1ff}
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes zoomPhoto{
+  from{transform:scale(1)}
+  to{transform:scale(1.09)}
+}
+
+/* Main page */
+.section{padding:34px 15px;max-width:700px;margin:auto}
+.memory-button{
+  display:block;width:100%;max-width:400px;margin:22px auto;
+  padding:25px 15px;border:1px solid #ffb7e4;
+  border-radius:20px;background:linear-gradient(135deg,#47234f,#28204b);
+  box-shadow:0 0 15px #b34f9970;
+}
+.memory-button h2{margin:5px}
+.memory-button p{font-size:13px;color:#ead5f5}
+.card{
+  background:#ffffff0c;border:1px solid #ffffff24;
+  border-radius:18px;padding:20px;margin:18px auto;
+}
+.uploads{
+  padding:12px;border:1px dashed #f2a9d6;
+  border-radius:13px;margin:12px auto;
+}
+.preview{
+  width:100%;max-height:250px;object-fit:contain;
+  border-radius:12px;margin-top:10px;
+}
+#slideshow{
+  position:relative;overflow:hidden;border-radius:16px;
+  background:#291a37;min-height:240px;
+}
+#slideImg{
+  width:100%;height:55vh;max-height:470px;min-height:240px;
+  object-fit:contain;animation:zoomPhoto 3s linear forwards;
+}
+#slideCount{padding:10px;color:#f7d3ed}
+#slideCaption{color:#ffd4ec;font-size:14px}
+
+/* Letter */
+.envelope{
+  width:100%;max-width:400px;margin:15px auto;
+  padding:27px 15px;border:1px solid #ffb5df;
+  border-radius:18px;background:linear-gradient(145deg,#713b76,#34234f);
+}
+.letter-line{
+  opacity:0;transform:translateY(8px);
+  animation:fadeIn .7s ease forwards;
+  margin:13px 0;line-height:1.8;font-size:16px;
+}
+.letter-line:last-child{color:#ffc4e5;font-weight:bold}
+
+/* Music */
+audio{width:100%;max-width:100%;margin-top:10px}
+
+/* Scratch surprise */
+#scratchCanvas{
+  display:block;width:100%;max-width:400px;height:260px;
+  margin:15px auto;border-radius:12px;
+  touch-action:none;cursor:crosshair;
+}
+#secretPhoto{
+  display:none;width:100%;max-width:400px;max-height:300px;
+  object-fit:contain;border-radius:12px;margin:10px auto;
+}
+
+/* Celebration */
+#celebration{
+  min-height:70vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  background:radial-gradient(ellipse,#66346c,#191026 75%);
+  padding:25px;overflow:hidden;
+}
+#celebration h1{animation:glow 1.5s infinite alternate}
+footer{padding:25px;color:#d8bddf;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop></audio>
+<audio id="favMusic"></audio>
+
+<!-- FIRST SCREEN -->
+<section id="welcome" class="hero">
+  <div class="hero-content">
+    <p style="font-size:13px;letter-spacing:3px">💗 A SPECIAL SURPRISE 💗</p>
+    <h1 class="dedication">This Is For You,<br>Kuttachi ❤️</h1>
+    <p style="font-size:18px">🎂 Happy Birthday! 🎂</p>
+
+    <div class="card" style="max-width:430px">
+      <p>🖼️ Choose Background Photo</p>
+      <input id="bgUpload" type="file" accept="image/*">
+      <p>🎶 Choose Background Music</p>
+      <input id="bgMusicUpload" type="file" accept="audio/*">
+      <p class="small">உன் photo-வும் music-உம் இங்கே தேர்வு செய்யலாம்.</p>
+    </div>
+
+    <div class="pin-box">
+      <p>🔐 Open Your Surprise</p>
+      <input id="pinInput" type="password" inputmode="numeric"
+        maxlength="4" placeholder="Enter 4-digit PIN">
+      <button onclick="unlock()">Open 💖</button>
+      <p id="pinError"></p>
+      <p class="small">PIN: 1110</p>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN WEBSITE -->
+<main id="mainWebsite" class="hidden">
+
+  <!-- GOLDEN MEMORIES ENTRY -->
+  <section class="hero" id="memoriesHero" style="min-height:85svh">
+    <div class="hero-content">
+      <h1 class="dedication">Our Golden Memories ✨</h1>
+      <p>💗 Touch to relive our memories 💗</p>
+
+      <div class="card" style="max-width:430px">
+        <p>📸 Choose your 10 photos</p>
+        <input id="photosUpload" type="file" accept="image/*" multiple>
+        <p class="small">10 photos தேர்வு செய். ஒவ்வொரு photo-வும் 3 seconds வரும்.</p>
+      </div>
+
+      <button onclick="startMemories()">▶ Open Memories</button>
+    </div>
+  </section>
+
+  <!-- 10 PHOTO VIDEO SLIDESHOW -->
+  <section id="slideshowSection" class="section hidden">
+    <h2>✨ Our Golden Memories ✨</h2>
+    <div id="slideshow">
+      <img id="slideImg" alt="Our golden memory">
+    </div>
+    <p id="slideCount">Photo 1 / 10</p>
+    <p id="slideCaption">Beautiful memories 💖</p>
+    <button onclick="toggleSlideshow()" id="pauseSlide">⏸ Pause</button>
+    <button onclick="stopSlideshow()">✖ Close Video</button>
+    <p class="small">ஒவ்வொரு photo-வும் 3 seconds-க்கு மாறும்.</p>
+    <button onclick="showLetter()">Continue to Letter 💌</button>
+  </section>
+
+  <!-- TAMIL LETTER -->
+  <section id="letterSection" class="section hidden">
+    <h2>💌 A Letter For You, Kuttachi</h2>
+    <div class="envelope">
+      <div style="font-size:35px">💌</div>
+      <p>உனக்காக ஒரு சின்ன கடிதம் ❤️</p>
+      <button id="openLetterButton" onclick="openLetter()">Open My Letter</button>
+    </div>
+    <div id="letterContent" class="card hidden"></div>
+    <button onclick="showMusic()">Next: Favourite Music 🎶</button>
+  </section>
+
+  <!-- FAVOURITE MUSIC -->
+  <section id="musicSection" class="section hidden">
+    <h2>🎶 Favourite Music 🎶</h2>
+    <div class="card">
+      <p>உனக்குப் பிடித்த பாடலைத் தேர்வு செய் 💗</p>
+      <input id="favMusicUpload" type="file" accept="audio/*">
+      <button onclick="playFavourite()">▶ Play</button>
+      <button onclick="pauseFavourite()">⏸ Pause</button>
+      <p class="small">Favourite song play ஆகும்போது background music pause ஆகும்.</p>
+    </div>
+    <button onclick="showScratch()">Next Surprise 💝</button>
+  </section>
+
+  <!-- SECRET PHOTO SCRATCH -->
+  <section id="scratchSection" class="section hidden">
+    <h2>💝 A Secret Photo For You 💝</h2>
+    <div class="card">
+      <p>முதலில் உன் secret photo-வைத் தேர்வு செய்.</p>
+      <input id="secretUpload" type="file" accept="image/*">
+      <img id="secretPhoto" alt="Secret memory">
+      <canvas id="scratchCanvas" width="800" height="520"></canvas>
+      <p class="small">மேலிருக்கும் பகுதியை விரலால் scratch செய்து photo-வைப் பார்!</p>
+      <button onclick="resetScratch()">Reset Scratch</button>
+    </div>
+    <button onclick="showCelebration()">Final Celebration 🎉</button>
+  </section>
+
+  <!-- FINAL CELEBRATION -->
+  <section id="celebration" class="hidden">
+    <p style="font-size:22px">🎈 ✨ 💗 🎆</p>
+    <h1 style="font-size:clamp(28px,7vw,44px)">
+      Happy Birthday,<br>Kuttachi! 🎂💜
+    </h1>
+    <p>உன் வாழ்க்கை முழுவதும் சந்தோஷம் நிறைந்திருக்கட்டும்! ❤️</p>
+    <p style="font-size:22px">💖 🎉 🦋 ✨ 💖</p>
+    <button onclick="restartWebsite()">Replay Surprise ↻</button>
+  </section>
+
+</main>
+
+<footer>Made with 💖 for Kuttachi</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let backgroundURL = "";
+let backgroundMusicURL = "";
+let favouriteMusicURL = "";
+let photoURLs = [];
+let photoIndex = 0;
+let slideTimer = null;
+let slidePaused = false;
+let scratchReady = false;
+let scratchMoves = 0;
+let scratchRevealed = false;
+let secretURL = "";
+let objectURLs = [];
+
+function makeURL(file){
+  const url = URL.createObjectURL(file);
+  objectURLs.push(url);
+  return url;
+}
+
+/* BACKGROUND PHOTO */
+$("bgUpload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  backgroundURL = makeURL(file);
+  $("welcome").style.backgroundImage =
+    `linear-gradient(#0002,#0002),url("${backgroundURL}")`;
+  $("memoriesHero").style.backgroundImage =
+    `linear-gradient(#0004,#0004),url("${backgroundURL}")`;
+});
+
+/* BACKGROUND MUSIC */
+$("bgMusicUpload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  backgroundMusicURL = makeURL(file);
+  $("bgMusic").src = backgroundMusicURL;
+});
+
+function unlock(){
+  if($("pinInput").value !== "1110"){
+    $("pinError").textContent = "PIN சரியில்லை. மீண்டும் முயற்சி செய் 💗";
+    return;
+  }
+  $("pinError").textContent = "";
+  $("welcome").classList.add("hidden");
+  $("mainWebsite").classList.remove("hidden");
+
+  if(backgroundMusicURL){
+    $("bgMusic").play().catch(()=>{});
+  }
+  startDecorations();
+  window.scrollTo(0,0);
+}
+
+/* SMALL DECORATIONS */
+let decorationTimer = null;
+function startDecorations(){
+  if(decorationTimer) return;
+  decorationTimer = setInterval(()=>{
+    if($("mainWebsite").classList.contains("hidden")) return;
+    const el = document.createElement("span");
+    el.className = "decor";
+    el.textContent = ["♡","✦","✨","♥","🦋"][Math.floor(Math.random()*5)];
+    el.style.left = Math.random()*95 + "vw";
+    el.style.bottom = "-20px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),7000);
+  },1400);
+}
+
+/* 10 PHOTO VIDEO */
+$("photosUpload").addEventListener("change", e=>{
+  photoURLs.forEach(url=>URL.revokeObjectURL(url));
+  photoURLs = Array.from(e.target.files)
+    .filter(file=>file.type.startsWith("image/"))
+    .slice(0,10)
+    .map(file=>makeURL(file));
+
+  if(photoURLs.length !== 10){
+    alert("முடிந்தால் சரியாக 10 photos தேர்வு செய். இப்போது "+photoURLs.length+" photos தேர்வு செய்யப்பட்டுள்ளன.");
+  }
+});
+
+function startMemories(){
+  if(photoURLs.length === 0){
+    alert("முதலில் photos தேர்வு செய் 📸");
+    $("photosUpload").click();
+    return;
+  }
+  $("memoriesHero").classList.add("hidden");
+  $("slideshowSection").classList.remove("hidden");
+  photoIndex = 0;
+  slidePaused = false;
+  $("pauseSlide").textContent = "⏸ Pause";
+  showCurrentPhoto();
+  clearInterval(slideTimer);
+  slideTimer = setInterval(()=>{
+    if(!slidePaused){
+      photoIndex = (photoIndex + 1) % photoURLs.length;
+      showCurrentPhoto();
+    }
+  },3000);
+  $("slideshowSection").scrollIntoView({behavior:"smooth"});
+}
+
+function showCurrentPhoto(){
+  $("slideImg").style.animation = "none";
+  void $("slideImg").offsetWidth;
+  $("slideImg").src = photoURLs[photoIndex];
+  $("slideImg").style.animation = "zoomPhoto 3s linear forwards";
+  $("slideCount").textContent =
+    `Photo ${photoIndex+1} / ${photoURLs.length}`;
+  $("slideCaption").textContent = "Memory "+(photoIndex+1)+" 💖";
+}
+
+function toggleSlideshow(){
+  slidePaused = !slidePaused;
+  $("pauseSlide").textContent = slidePaused ? "▶ Resume" : "⏸ Pause";
+}
+
+function stopSlideshow(){
+  clearInterval(slideTimer);
+  slideTimer = null;
+  $("slideshowSection").classList.add("hidden");
+  $("memoriesHero").classList.remove("hidden");
+  $("memoriesHero").scrollIntoView({behavior:"smooth"});
+}
+
+function showLetter(){
+  clearInterval(slideTimer);
+  $("slideshowSection").classList.add("hidden");
+  $("letterSection").classList.remove("hidden");
+  $("letterSection").scrollIntoView({behavior:"smooth"});
+}
+
+/* TAMIL BIRTHDAY LETTER */
+const letterLines = [
+  "My dearest Kuttachi ❤️",
+  "என்ன சொல்லணும்னு தெரியல… உன்னைப் பற்றி சொல்ல வார்த்தைகளே போதாது.",
+  "நான் சொல்லாமலேயே என் மனசுல என்ன இருக்குனு புரிஞ்சிக்கிற ஒரு அழகான மனசு உனக்கு இருக்கு.",
+  "எனக்காக நிற்ப, என்னை யாருக்காகவும் விட்டுக்கொடுக்க மாட்ட, என் சந்தோஷத்தையும் கவலையையும் புரிஞ்சிக்கிற உன்னைப் போன்ற ஒரு தோழி கிடைச்சது எனக்குக் கிடைத்த பெரிய வரம்.",
+  "நீ எப்பவும் சந்தோஷமா இருக்கணும். உன்னோட எல்லா ஆசைகளும் நிறைவேறணும். உன் வாழ்க்கை முழுக்க சிரிப்பும் சந்தோஷமும் நிறைந்திருக்கணும்.",
+  "நீ என் life-ல எப்பவும் இருக்கணும். உன்னை ஒருபோதும் இழந்திடக் கூடாதுனு ஆசைப்படுறேன். நம்ம நினைவுகள் எல்லாமே எப்பவும் அழகானதா இருக்கணும்.",
+  "Happy Birthday, Kuttachi! 🎂💜",
+  "You will always be a special person in my life. 🫶🏻❤️"
+];
+
+function openLetter(){
+  const box = $("letterContent");
+  box.innerHTML = "";
+  box.classList.remove("hidden");
+  $("openLetterButton").classList.add("hidden");
+
+  letterLines.forEach((line,index)=>{
+    const p = document.createElement("p");
+    p.className = "letter-line";
+    p.textContent = line;
+    p.style.animationDelay = (index*0.8)+"s";
+    box.appendChild(p);
+  });
+}
+
+function showMusic(){
+  $("letterSection").classList.add("hidden");
+  $("musicSection").classList.remove("hidden");
+  $("musicSection").scrollIntoView({behavior:"smooth"});
+}
+
+/* FAVOURITE MUSIC */
+$("favMusicUpload").addEventListener("change",e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  favouriteMusicURL = makeURL(file);
+  $("favMusic").src = favouriteMusicURL;
+});
+
+function playFavourite(){
+  if(!favouriteMusicURL){
+    alert("முதலில் favourite song தேர்வு செய் 🎶");
+    $("favMusicUpload").click();
+    return;
+  }
+  $("bgMusic").pause();
+  $("favMusic").play().catch(()=>{});
+}
+function pauseFavourite(){
+  $("favMusic").pause();
+  if(backgroundMusicURL) $("bgMusic").play().catch(()=>{});
+}
+$("favMusic").addEventListener("ended",()=>{
+  if(backgroundMusicURL) $("bgMusic").play().catch(()=>{});
+});
+
+function showScratch(){
+  $("musicSection").classList.add("hidden");
+  $("scratchSection").classList.remove("hidden");
+  $("scratchSection").scrollIntoView({behavior:"smooth"});
+  setupScratch();
+}
+
+/* SCRATCH PHOTO */
+const canvas = $("scratchCanvas");
+const ctx = canvas.getContext("2d");
+let scratching = false;
+
+$("secretUpload").addEventListener("change",e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  secretURL = makeURL(file);
+  $("secretPhoto").src = secretURL;
+  $("secretPhoto").style.display = "block";
+  scratchRevealed = false;
+  setupScratch();
+});
+
+function setupScratch(){
+  if(scratchReady && !scratchRevealed) return;
+  scratchReady = true;
+  scratchMoves = 0;
+  scratchRevealed = false;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#d8a8dc";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#44204e";
+  ctx.textAlign = "center";
+  ctx.font = "bold 36px Arial";
+  ctx.fillText("Scratch Here 💗",canvas.width/2,canvas.height/2);
+  ctx.font = "28px Arial";
+  ctx.fillText("✨ Reveal Your Memory ✨",canvas.width/2,canvas.height/2+55);
+  $("secretPhoto").style.opacity = "1";
+}
+
+function scratchAt(e){
+  if(scratchRevealed) return;
+  if(!$("secretPhoto").src || !secretURL) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX-rect.left)*canvas.width/rect.width;
+  const y = (e.clientY-rect.top)*canvas.height/rect.height;
+
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(x,y,35,0,Math.PI*2);
+  ctx.fill();
+  scratchMoves++;
+
+  if(scratchMoves > 35){
+    scratchRevealed = true;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    setTimeout(()=>{
+      $("secretPhoto").style.opacity = "0";
+    },5000);
+  }
+}
+
+canvas.addEventListener("pointerdown",e=>{
+  scratching = true;
+  canvas.setPointerCapture(e.pointerId);
+  scratchAt(e);
+});
+canvas.addEventListener("pointermove",e=>{
+  if(scratching) scratchAt(e);
+});
+canvas.addEventListener("pointerup",()=>scratching=false);
+canvas.addEventListener("pointercancel",()=>scratching=false);
+
+function resetScratch(){
+  $("secretPhoto").style.opacity = "1";
+  setupScratch();
+}
+
+function showCelebration(){
+  clearInterval(slideTimer);
+  $("scratchSection").classList.add("hidden");
+  $("celebration").classList.remove("hidden");
+  $("celebration").scrollIntoView({behavior:"smooth"});
+}
+
+function restartWebsite(){
+  clearInterval(slideTimer);
+  slideTimer = null;
+  slidePaused = false;
+  photoIndex = 0;
+  $("celebration").classList.add("hidden");
+  $("slideshowSection").classList.add("hidden");
+  $("letterSection").classList.add("hidden");
+  $("musicSection").classList.add("hidden");
+  $("scratchSection").classList.add("hidden");
+  $("memoriesHero").classList.remove("hidden");
+  $("mainWebsite").classList.remove("hidden");
+  $("welcome").classList.add("hidden");
+  $("letterContent").classList.add("hidden");
+  $("openLetterButton").classList.remove("hidden");
+  $("favMusic").pause();
+  if(backgroundMusicURL) $("bgMusic").play().catch(()=>{});
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
